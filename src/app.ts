@@ -17,7 +17,7 @@ createConnection(config).then(async () => {
   console.log('AppDataSource has been initialized!');
 });
 
-app.set('port', PORT || 3000);
+app.set('port', PORT);
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -26,7 +26,7 @@ app.use(passport.session());
 app.use(lusca.xssProtection(true));
 app.use(cors(CORS_OPTIONS));
 
-// app.use('/', passport.authenticate('jwt', { session: false }), withdrawRouter);
+// app.use('/', passport.authenticate('jwt', { session: false }), dummyRouter);
 app.get('/', (_req, res: Response) => res.json({ message: 'It works!' }));
 app.use('/api/auth', authRoutes);
 

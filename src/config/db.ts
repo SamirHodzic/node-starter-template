@@ -9,8 +9,6 @@ import {
   POSTGRES_USER,
 } from './secrets';
 
-console.log(__dirname + './src/db/entities/*{.ts,.js}');
-
 const config: ConnectionOptions = {
   type: 'postgres',
   host: POSTGRES_HOST,
