@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=defaultdb
+    ports:
+      - "5433:5432"
+
+  # pgAdmin http://localhost:16543/
+  pgadmin-compose:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "samir@relity.games"
+      PGADMIN_DEFAULT_PASSWORD: "password123"
+    ports:
+      - "16543:80"
+    depends_on:
+      - postgres
