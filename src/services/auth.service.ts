@@ -2,12 +2,13 @@ import { UserRepository } from '../db/repositories/user.repository';
 import bcrypt from 'bcrypt';
 import { generateToken } from '../config/jwt';
 import { ApiError } from '../util/error-handler';
+import { getCustomRepository } from 'typeorm';
 
 export class AuthService {
   private userRepository: UserRepository;
 
   constructor() {
-    this.userRepository = new UserRepository();
+    this.userRepository = getCustomRepository(UserRepository);
   }
 
   public login = async (email: string, password: string) => {

@@ -9,8 +9,10 @@ import { CORS_OPTIONS } from './config/cors';
 import config from './config/db';
 import { NODE_ENV, PORT } from './config/secrets';
 import { AuthController } from './controllers/auth.controller';
+import { UserController } from './controllers/user.controller';
 import { handleError } from './util/error-handler';
 import validationMiddleware from './util/validation.middleware';
+import authMiddleware from './util/auth.middleware';
 
 class Server {
   private app: express.Application;
@@ -39,11 +41,11 @@ class Server {
   }
 
   public routes() {
-    // app.use('/', passport.authenticate('jwt', { session: false }), dummyRouter);
     this.app.get('/', (_req: Request, res: Response) =>
       res.json({ message: 'It works!' })
     );
     this.app.use('/api/auth', new AuthController().router);
+    this.app.use('/api/user', authMiddleware, new UserController().router);
   }
 
   public start() {
