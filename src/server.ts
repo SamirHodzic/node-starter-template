@@ -11,7 +11,6 @@ import { NODE_ENV, PORT } from './config/secrets';
 import { AuthController } from './controllers/auth.controller';
 import { UserController } from './controllers/user.controller';
 import { handleError } from './util/error-handler';
-import validationMiddleware from './util/validation.middleware';
 import authMiddleware from './util/auth.middleware';
 
 class Server {
@@ -31,7 +30,6 @@ class Server {
     this.app.use(passport.session());
     this.app.use(lusca.xssProtection(true));
     this.app.use(cors(CORS_OPTIONS));
-    this.app.use(validationMiddleware);
     this.routes();
     this.app.use(
       (err: any, _req: Request, res: Response, _next: NextFunction) => {
