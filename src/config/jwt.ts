@@ -1,5 +1,6 @@
 import passport from 'passport';
 import passportJwt from 'passport-jwt';
+import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from './secrets';
 
 const JwtStrategy = passportJwt.Strategy;
@@ -21,5 +22,9 @@ passport.use(
     }
   )
 );
+
+export const generateToken = (data: any) => {
+  return jwt.sign({ ...data }, JWT_SECRET, { expiresIn: '1h' });
+};
 
 export default passport;

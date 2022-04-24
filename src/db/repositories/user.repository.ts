@@ -1,12 +1,36 @@
+import { getRepository, Repository } from 'typeorm';
 import { User } from '../entities/User';
-import { BaseRepository } from './base.repository';
 
-export class UserRepository extends BaseRepository {
+export class UserRepository {
+  protected readonly repository: Repository<User>;
+
   constructor() {
-    super(User);
+    this.repository = getRepository(User);
   }
 
-  async findOne(id: string) {
-    return await this.repository.findOne(id);
+  async createNew(username: string, email: string, password: string) {
+    const user = this.repository.create({
+      username,
+      email,
+      password,
+    });
+
+    return await this.repository.save(user);
+  }
+
+  async findByEmail(email: string) {
+    return await this.repository.findOne({
+      where: {
+        email,
+      },
+    });
+  }
+
+  async findByUsername(username: string) {
+    return await this.repository.findOne({
+      where: {
+        username,
+      },
+    });
   }
 }
